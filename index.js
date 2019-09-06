@@ -30,6 +30,6 @@ massive(process.env.DATABASE_URL)
             res.sendFile(path.join(__dirname, 'build', 'index.html'));
         })
 
-        app.listen(5000, () => console.log('listening on 5000'))
+        app.listen(process.env.PORT || 5000, () => console.log('listening on 5000'))
 
     })
