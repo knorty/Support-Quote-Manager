@@ -44,7 +44,7 @@ class TapeEntry extends React.Component {
             comments: this.state.comments ? this.state.comments : ''
         }
 
-        Axios.post('http://localhost:8001/tape/entry', device)
+        Axios.post('/tape/entry', device)
             .then(res => console.log(res.data));
         this.setState({
             carrier_tape: '',

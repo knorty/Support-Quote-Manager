@@ -1,8 +1,9 @@
-import React from 'react';
-import Axios from "axios";
+import React from "react";
+import axios from "axios";
 
-class DeviceEntry extends React.Component {
+class EditDevice extends React.Component {
     state = {
+        device: null,
         mpn: '',
         package_type: '',
         device_ao: '',
@@ -18,51 +19,41 @@ class DeviceEntry extends React.Component {
         nre: '',
         email_subject: '',
         notes: ''
-    }
+
+    };
 
     handleInput = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         console.log(this.state);
     };
 
-    handleSubmit = () => {
-        const device = {
-            mpn: this.state.mpn ? this.state.mpn : '',
-            package_type: this.state.package_type ? this.state.package_type : '',
-            device_ao: this.state.device_ao ? this.state.device_ao : null,
-            device_bo: this.state.device_bo ? this.state.device_bo : null,
-            device_ko: this.state.device_ko ? this.state.device_ko : null,
-            customer: this.state.customer ? this.state.customer : '',
-            contact: this.state.contact ? this.state.contact : '',
-            date_quoted: this.state.date_quoted ? this.state.date_quoted : '2000-01-01',
-            quote_eau: this.state.quote_eau ? this.state.quote_eau : null,
-            quote_number: this.state.quote_number ? this.state.quote_number : null,
-            min_price: this.state.min_price ? this.state.min_price : null,
-            tr_unit_pricing: this.state.tr_unit_pricing ? this.state.tr_unit_pricing : null,
-            nre: this.state.nre ? this.state.nre : null,
-            email_subject: this.state.email_subject ? this.state.email_subject : '',
-            notes: this.state.notes ? this.state.notes : ''
-        }
-
-        Axios.post('http://localhost:8001/device/entry', device)
-            .then(res => console.log(res.data));
-        this.setState({
-            mpn: '',
-            package_type: '',
-            device_ao: '',
-            device_bo: '',
-            device_ko: '',
-            customer: '',
-            contact: '',
-            date_quoted: '',
-            quote_eau: '',
-            quote_number: '',
-            min_price: '',
-            tr_unit_pricing: '',
-            nre: '',
-            email_subject: '',
-            notes: '',
-        })
+    componentDidMount() {
+        axios
+            .get(`/devices/${this.props.match.params.mpn}`)
+            .then(response => {
+                console.log(response.data[0])
+                if (response.data.length) {
+                    this.setState({
+                        device: response.data[0],
+                        mpn: response.data[0].mpn,
+                        package_type: response.data[0].package_type,
+                        device_ao: response.data[0].device_ao,
+                        device_bo: response.data[0].device_bo,
+                        device_ko: response.data[0].device_ko,
+                        customer: response.data[0].customer,
+                        contact: response.data[0].contact,
+                        date_quoted: response.data[0].date_quoted,
+                        quote_eau: response.data[0].quote_eau,
+                        quote_number: response.data[0].quote_number,
+                        min_price: response.data[0].min_price,
+                        tr_unit_pricing: response.data[0].tr_unit_pricing,
+                        nre: response.data[0].nre,
+                        email_subject: response.data[0].email_subject,
+                        notes: response.data[0].notes
+                    })
+                }
+            })
+            .catch(console.error);
     }
 
     render() {
@@ -134,13 +125,11 @@ class DeviceEntry extends React.Component {
                 <div className="submit-container">
                     <button className="submit" onClick={this.handleSubmit}>
                         Submit
-                        </button>
+                    </button>
                 </div>
             </div>
         );
     }
 }
 
-export default DeviceEntry;
-
-
+export default EditDevice;

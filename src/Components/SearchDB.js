@@ -25,9 +25,9 @@ class SearchDB extends React.Component {
 
 
     getTape = (e) => {
-        console.log(`http://localhost:8001/carrier_tape/${e}`)
+        console.log(`/carrier_tape/${e}`)
         axios
-            .get(`http://localhost:8001/carrier_tape/${e}`)
+            .get(`/carrier_tape/${e}`)
             .then(response => this.setState({
                 tape: response.data
             }))
@@ -35,9 +35,9 @@ class SearchDB extends React.Component {
     }
 
     getDevice = (e) => {
-        console.log(`http://localhost:8001/devices/${e}`)
+        console.log(`/devices/${e}`)
         axios
-            .get(`http://localhost:8001/devices/${e}`)
+            .get(`/devices/${e}`)
             .then(response => this.setState({
                 device: response.data
             }))

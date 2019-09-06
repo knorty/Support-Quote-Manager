@@ -10,14 +10,14 @@ class Compatibility extends React.Component {
 
     componentDidMount() {
         axios
-            .get(`http://localhost:8001/devices/${this.props.match.params.mpn}`)
+            .get(`/devices/${this.props.match.params.mpn}`)
             .then(response => {
                 if (response.data.length) {
                     this.setState({
                         device: response.data[0]
                     })
                     axios
-                        .post('http://localhost:8001/compatible_tapes', response.data[0])
+                        .post('/compatible_tapes', response.data[0])
                         .then(response => {
                             this.setState({
                                 tape: response.data
