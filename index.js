@@ -12,11 +12,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 massive(process.env.DATABASE_URL)
-    // host: 'localhost',
-    // port: 5432,
-    // database: 'sqm',
-    // user: 'kylenorton',
-    // password: ''
     .then(db => {
 
         app.set('db', db);
@@ -26,6 +21,8 @@ massive(process.env.DATABASE_URL)
         app.post('/compatible_tapes', controller.findCompatibleTapes);
         app.post('/device/entry', controller.addDevice);
         app.post('/tape/entry', controller.addTape);
+        app.put('/device_update', controller.updateDevice);
+        app.put('/tape_update', controller.updateTape);
         app.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, 'build', 'index.html'));
         })

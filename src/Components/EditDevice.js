@@ -1,8 +1,16 @@
 import React from "react";
 import axios from "axios";
+import BackArrow from "./icons/left-arrow.svg";
+import "./css/Entry.css";
+import "./css/Form.css";
+import MenuIcon from "./icons/menu-btn.svg";
 
 class EditDevice extends React.Component {
     state = {
+        menu: false,
+        deviceSelected: 'selected',
+        tapeSelected: 'un-selected',
+
         device: null,
         mpn: '',
         package_type: '',
@@ -28,6 +36,7 @@ class EditDevice extends React.Component {
     };
 
     componentDidMount() {
+        console.log(this.props.match.params.mpn);
         axios
             .get(`/devices/${this.props.match.params.mpn}`)
             .then(response => {
@@ -56,8 +65,65 @@ class EditDevice extends React.Component {
             .catch(console.error);
     }
 
+    toggle = () => { this.setState({ menu: !this.state.menu }) };
+    goToSearch = () => { this.props.history.push(`/search`) };
+    goToHome = () => { this.props.history.push(`/`) };
+    selectType = (e) => {
+        e.target.name === 'deviceSelected' ?
+            this.setState({
+                [e.target.name]: 'selected',
+                tapeSelected: 'un-selected'
+            }) : this.setState({
+                deviceSelected: 'un-selected',
+                tapeSelected: 'selected'
+            })
+
+    }
+
+    handleSave = () => {
+        const device = {
+            mpn: this.state.mpn ? this.state.mpn : '',
+            package_type: this.state.package_type ? this.state.package_type : '',
+            device_ao: this.state.device_ao ? this.state.device_ao : null,
+            device_bo: this.state.device_bo ? this.state.device_bo : null,
+            device_ko: this.state.device_ko ? this.state.device_ko : null,
+            customer: this.state.customer ? this.state.customer : '',
+            contact: this.state.contact ? this.state.contact : '',
+            date_quoted: this.state.date_quoted ? this.state.date_quoted : '2000-01-01',
+            quote_eau: this.state.quote_eau ? this.state.quote_eau : null,
+            quote_number: this.state.quote_number ? this.state.quote_number : null,
+            min_price: this.state.min_price ? this.state.min_price : null,
+            tr_unit_pricing: this.state.tr_unit_pricing ? this.state.tr_unit_pricing : null,
+            nre: this.state.nre ? this.state.nre : null,
+            email_subject: this.state.email_subject ? this.state.email_subject : '',
+            notes: this.state.notes ? this.state.notes : ''
+        }
+
+        axios.put('/device_update', device)
+            .then(res => console.log(res.data))
+            .then(axios.get(`/devices/${this.props.match.params.mpn}`))
+    }
+
     render() {
         return (
+            <div className="entry">
+                <div className="entry-header">
+                    <img className="back-arrow" src={BackArrow} alt="Back Arrow" onClick={this.goToSearch} />
+                    <div className="entry-page-title">
+                        Edit Device
+                    </div>
+                    <div className="entry-menu">
+                        <div className="entry-menu-btn-container">
+                            <img className="entry-menu-icon" src={MenuIcon} alt="Menu Icon" onClick={this.toggle} />
+                        </div>
+                        {this.state.menu ?
+                            <div className="entry-menu-items">
+                                <button className="entry-menu-item" onClick={this.goToSearch}>Search</button>
+                                <button className="entry-menu-item" onClick={this.goToHome}>Home</button>
+                            </div> : null
+                        }
+                    </div>
+                </div>
             <div className="entry-body">
                 <div className="entry-line">
                     <div className="input-container">
@@ -123,10 +189,9 @@ class EditDevice extends React.Component {
                     </div>
                 </div>
                 <div className="submit-container">
-                    <button className="submit" onClick={this.handleSubmit}>
-                        Submit
-                    </button>
+                    <button className="submit" onClick={this.handleSave}>Save</button>
                 </div>
+            </div>
             </div>
         );
     }

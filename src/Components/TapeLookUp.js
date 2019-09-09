@@ -1,6 +1,12 @@
 import React from 'react';
 
 class TapeLookUp extends React.Component {
+
+  editTape = () => {
+    console.log(this.props.carrier_tape);
+    this.props.history.push(`/edit_tape/${this.props.carrier_tape}`)
+  }
+
   render() {
     return (
       <div className="results" key={this.props.index}>
@@ -51,6 +57,9 @@ class TapeLookUp extends React.Component {
           <div className="info">
             {this.props.ko}
           </div>
+        </div>
+        <div className="info-item">
+          <button className="big-btn" onClick={this.editTape}>Edit</button>
         </div>
       </div>
     );

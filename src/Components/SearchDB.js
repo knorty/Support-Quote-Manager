@@ -58,6 +58,7 @@ class SearchDB extends React.Component {
                     ao={tape.ao}
                     bo={tape.bo}
                     ko={tape.ko}
+                    history={this.props.history}
                 />
             )
         })

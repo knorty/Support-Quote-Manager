@@ -5,7 +5,7 @@ class DeviceLookUp extends React.Component {
         this.props.history.push(`/device/${this.props.mpn}`)
     }
     editDevice = () => {
-        this.props.history.push(`/edit/device/${this.props.mpn}`)
+        this.props.history.push(`/edit_device/${this.props.mpn}`)
     }
 
     render() {
