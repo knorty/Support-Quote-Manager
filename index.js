@@ -7,7 +7,7 @@ const cors = require('cors');
 const path = require('path');
 const controller = require('./controller');
 
-app.use(cors({ origin: ['http://localhost:3000'] }))
+app.use(cors({ origin: ['http://localhost:5000'] }))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 

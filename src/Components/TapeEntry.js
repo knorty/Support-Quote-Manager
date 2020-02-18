@@ -68,10 +68,8 @@ class TapeEntry extends React.Component {
     render() {
         return (
             <div className="entry-body">
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.carrier_tape} name="carrier_tape" placeholder="CARRIER TAPE" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                    <input className="input-field" value={this.state.carrier_tape} name="carrier_tape" placeholder="CARRIER TAPE" type="text" onChange={this.handleInput} />
                 </div>
                 <div className="entry-line">
                     <div className="input-container">
@@ -81,10 +79,8 @@ class TapeEntry extends React.Component {
                         <input className="input-field input-small" value={this.state.mpr} name="mpr" placeholder="MPR" type="text" onChange={this.handleInput} />
                     </div>
                 </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.vendor_part_number} name="vendor_part_number" placeholder="VENDOR PART NUMBER" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                    <input className="input-field" value={this.state.vendor_part_number} name="vendor_part_number" placeholder="VENDOR PART NUMBER" type="text" onChange={this.handleInput} />
                 </div>
                 <div className="entry-line">
                     <div className="input-container">
@@ -128,9 +124,7 @@ class TapeEntry extends React.Component {
                     </div>
                 </div>
                 <div className="submit-container">
-                    <button className="submit" onClick={this.handleSubmit}>
-                        Submit
-                        </button>
+                    <button className="submit" onClick={this.handleSubmit}>SUBMIT</button>
                 </div>
             </div>
         );

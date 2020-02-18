@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class DeviceEntry extends React.Component {
     state = {
@@ -45,38 +46,20 @@ class DeviceEntry extends React.Component {
         }
 
         Axios.post('/device/entry', device)
-            .then(res => console.log(res.data));
-        this.setState({
-            mpn: '',
-            package_type: '',
-            device_ao: '',
-            device_bo: '',
-            device_ko: '',
-            customer: '',
-            contact: '',
-            date_quoted: '',
-            quote_eau: '',
-            quote_number: '',
-            min_price: '',
-            tr_unit_pricing: '',
-            nre: '',
-            email_subject: '',
-            notes: '',
-        })
+            .then((res) => {
+                console.log(res.data)
+                this.props.history.push(`/view/device/${this.state.mpn}`)
+            })
     }
 
     render() {
         return (
             <div className="entry-body">
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.mpn} name="mpn" placeholder="MPN" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                    <input className="input-field " value={this.state.mpn} name="mpn" placeholder="MPN" type="text" onChange={this.handleInput} />
                 </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.package_type} name="package_type" placeholder="Package Type" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                    <input className="input-field" value={this.state.package_type} name="package_type" placeholder="Package Type" type="text" onChange={this.handleInput} />
                 </div>
                 <div className="entry-line">
                     <div className="input-container">
@@ -97,10 +80,8 @@ class DeviceEntry extends React.Component {
                         <input className="input-field input-medium" value={this.state.contact} name="contact" placeholder="Contact" type="text" onChange={this.handleInput} />
                     </div>
                 </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.date_quoted} name="date_quoted" placeholder="Date Quoted" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                        <input className="input-field" value={this.state.date_quoted} name="date_quoted" placeholder="Date Quoted" type="date" onChange={this.handleInput} />
                 </div>
                 <div className="entry-line">
                     <div className="input-container">
@@ -121,26 +102,20 @@ class DeviceEntry extends React.Component {
                         <input className="input-field input-small" value={this.state.nre} name="nre" placeholder="NRE" type="text" onChange={this.handleInput} />
                     </div>
                 </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.email_subject} name="email_subject" placeholder="Email Subject" type="text" onChange={this.handleInput} />
-                    </div>
+                <div className="entry-line input-large">
+                        <input className="input-field" value={this.state.email_subject} name="email_subject" placeholder="Email Subject" type="text" onChange={this.handleInput} />
                 </div>
                 <div className="entry-line">
-                    <div className="input-container">
-                        <textarea className="input-field text-area" value={this.state.notes} name="notes" placeholder="Notes" type="text" onChange={this.handleInput} />
-                    </div>
+                    <textarea className="text-area" value={this.state.notes} name="notes" placeholder="Notes" type="text" onChange={this.handleInput} />
                 </div>
                 <div className="submit-container">
-                    <button className="submit" onClick={this.handleSubmit}>
-                        Submit
-                        </button>
+                    <button className="submit" onClick={this.handleSubmit}>SUBMIT</button>
                 </div>
             </div>
         );
     }
 }
 
-export default DeviceEntry;
+export default withRouter(DeviceEntry);
 
 

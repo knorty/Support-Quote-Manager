@@ -1,0 +1,78 @@
+.view {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  margin-bottom: 25px;
+}
+
+.view-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.view-page-title {
+  color: #fbf9ff;
+  font-size: 50px;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 25px;
+}
+
+.view-body {
+  width: 70%;
+  background: #f2f9ff;
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+}
+
+.view-info-container {
+  margin-top: 25px;
+  width: 100%;
+  padding: 10px;
+  background: #f9fcff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-line-title {
+  color: #343434;
+  font-family: Helvetica, sans-serif;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  overflow-wrap: normal;
+}
+
+.view-line {
+  color: #343434;
+  font-family: Helvetica, sans-serif;
+  margin-right: 20px;
+  font-size: 20px;
+  overflow-wrap: normal;
+}
+
+.edit-btn {
+  width: 75px;
+  align-self: center;
+  color: #343434;
+  font-weight: bold;
+  background: #fbf9ff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.edit-btn:hover {
+  background: #79ff4c;
+  cursor: pointer;
+}

@@ -3,13 +3,9 @@ import axios from "axios";
 import "../css/Entry.css";
 import "../css/Form.css";
 
-class EditTape extends React.Component {
-    state = {
-        menu: false,
-        deviceSelected: 'selected',
-        tapeSelected: 'un-selected',
 
-        tape: null,
+class ViewTape extends React.Component {
+    state = {
         carrier_tape: '',
         vendor: '',
         mpr: '',
@@ -59,34 +55,8 @@ class EditTape extends React.Component {
             .catch(console.error);
     }
 
-    handleInput = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state);
-    };
-
-    handleSave = () => {
-        const tape = {
-            carrier_tape: this.state.carrier_tape ? this.state.carrier_tape : '',
-            vendor: this.state.vendor ? this.state.vendor : '',
-            mpr: this.state.mpr ? this.state.mpr : '',
-            vendor_part_number: this.state.vendor_part_number ? this.state.vendor_part_number : '',
-            width: this.state.width ? this.state.width : null,
-            pitch: this.state.pitch ? this.state.pitch : null,
-            ao: this.state.ao ? this.state.ao : null,
-            bo: this.state.bo ? this.state.bo : null,
-            ko: this.state.ko ? this.state.ko : null,
-            k1: this.state.k1 ? this.state.k1 : null,
-            pockets_per_22inch_reel: this.state.pockets_per_22inch_reel ? this.state.pockets_per_22inch_reel : null,
-            max_pockets_per_13inch_reel: this.state.max_pockets_per_13inch_reel ? this.state.max_pockets_per_13inch_reel : null,
-            max_meters_per_13inch_reel: this.state.max_meters_per_13inch_reel ? this.state.max_meters_per_13inch_reel : null,
-            desired_pockets_per_13inch_reel: this.state.desired_pockets_per_13inch_reel ? this.state.desired_pockets_per_13inch_reel : null,
-            comments: this.state.comments ? this.state.comments : '',
-            id: this.state.id
-        }
-        console.log(tape);
-        axios.put('/tape_update', tape)
-            .then(res => console.log(res.data))
-            .then(axios.get(`/carrier_tape/${this.props.match.params.carrier_tape}`))
+    handleEdit = () => {
+        this.props.history.push(`/edit_tape/${this.state.carrier_tape}`)
     }
 
     render() {
@@ -152,8 +122,8 @@ class EditTape extends React.Component {
                             <textarea className="input-field text-area" value={this.state.comments} name="comments" placeholder="COMMENTS" type="text" onChange={this.handleInput} />
                         </div>
                     </div>
-                    <div className="submit-container">
-                        <button className="submit" onClick={this.handleSave}>Save</button>
+                    <div className="edit-btn-container">
+                        <button className="edit-btn" onClick={this.handleEdit}>Edit</button>
                     </div>
                 </div>
             </div>
@@ -161,4 +131,4 @@ class EditTape extends React.Component {
     }
 }
 
-export default EditTape;
+export default ViewTape;

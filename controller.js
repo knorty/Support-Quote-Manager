@@ -193,6 +193,7 @@ const addTape = (req, res) => {
 };
 
 const updateDevice = (req, res) => {
+    console.log(req.body, req.body.id)
     const db = req.app.get('db')
     const mpn = req.body.mpn;
     const package_type = req.body.package_type;
@@ -207,45 +208,46 @@ const updateDevice = (req, res) => {
     const quote_number = req.body.quote_number;
     const min_price = req.body.min_price;
     const tr_unit_pricing = req.body.tr_unit_pricing;
-    const nre = req.body.nre
+    const nre = req.body.nre;
     const email_subject = req.body.email_subject;
+    const id = req.body.id;
 
     db.query(`
-        UPDATE devices SET (
-            mpn,
-            package_type,
-            device_ao,
-            device_bo,
-            device_ko,
-            date_quoted,
-            customer,
-            contact,
-            notes,
-            quote_eau,
-            quote_number,
-            min_price,
-            tr_unit_pricing,
-            nre,
-            email_subject
-        ) 
-        = (
-            \${mpn},
-            \${package_type},
-            \${device_ao},
-            \${device_bo},
-            \${device_ko},
-            \${date_quoted},
-            \${customer},
-            \${contact},
-            \${notes},
-            \${quote_eau},
-            \${quote_number},
-            \${min_price},
-            \${tr_unit_pricing},
-            \${nre},
-            \${email_subject}
-        )
-        WHERE mpn = \${mpn}`,
+            UPDATE devices SET (
+                mpn,
+                package_type,
+                device_ao,
+                device_bo,
+                device_ko,
+                date_quoted,
+                customer,
+                contact,
+                notes,
+                quote_eau,
+                quote_number,
+                min_price,
+                tr_unit_pricing,
+                nre,
+                email_subject
+                )
+                = (
+                    \${mpn},
+                    \${package_type},
+                    \${device_ao},
+                    \${device_bo},
+                    \${device_ko},
+                    \${date_quoted},
+                    \${customer},
+                    \${contact},
+                    \${notes},
+                    \${quote_eau},
+                    \${quote_number},
+                    \${min_price},
+                    \${tr_unit_pricing},
+                    \${nre},
+                    \${email_subject}
+                )
+                WHERE id = \${id}`,
         {
             mpn,
             package_type,
@@ -261,11 +263,13 @@ const updateDevice = (req, res) => {
             min_price,
             tr_unit_pricing,
             nre,
-            email_subject
+            email_subject,
+            id
         }
     )
+        .then(data => { console.log(mpn) })
         .then((data) => {
-            res.send(console.log('Entered!'))
+            res.send(data, console.log('Entered!'))
         })
         .catch((error) => {
             console.error
@@ -289,6 +293,7 @@ const updateTape = (req, res) => {
     const max_meters_per_13inch_reel = req.body.max_meters_per_13inch_reel;
     const desired_pockets_per_13inch_reel = req.body.desired_pockets_per_13inch_reel;
     const comments = req.body.comments;
+    const id = req.body.id;
 
     db.query(`
         UPDATE carrier_tape SET (
@@ -325,7 +330,7 @@ const updateTape = (req, res) => {
             \${desired_pockets_per_13inch_reel},
             \${comments}
         ) 
-        WHERE carrier_tape = \${carrier_tape}`,
+        WHERE id = \${id}`,
         {
             carrier_tape,
             vendor,
@@ -341,7 +346,8 @@ const updateTape = (req, res) => {
             max_pockets_per_13inch_reel,
             max_meters_per_13inch_reel,
             desired_pockets_per_13inch_reel,
-            comments
+            comments,
+            id
         }
     )
         .then((data) => {

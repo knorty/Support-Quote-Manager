@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import TapeLookUp from "./TapeLookUp.js";
 import DeviceLookUp from "./DeviceLookUp.js";
-import AddButton from "./icons/plus-button.svg";
+import "../css/SearchDB.css";
 
 class SearchDB extends React.Component {
     state = {
@@ -13,14 +13,23 @@ class SearchDB extends React.Component {
     };
 
     handleTape = (e) => {
-        this.setState({ [e.target.name]: e.target.value, device: [], searchDevice: '' });
-        this.getTape(e.target.value)
-
+        const emptyChar = e.target.value.charAt(0);
+        if (emptyChar !== ' ') {
+            this.setState({ [e.target.name]: e.target.value, device: [], searchDevice: '' });
+            if (e.target.value) {
+                this.getTape(e.target.value)
+            }
+        }
     };
 
     handleDevice = (e) => {
-        this.setState({ [e.target.name]: e.target.value, tape: [], searchTape: '' });
-        this.getDevice(e.target.value)
+        const emptyChar = e.target.value.charAt(0);
+        if (emptyChar !== ' ') {
+            this.setState({ [e.target.name]: e.target.value, tape: [], searchTape: '' });
+            if (e.target.value) {
+                this.getDevice(e.target.value)
+            }
+        }
     };
 
 
@@ -38,9 +47,7 @@ class SearchDB extends React.Component {
         console.log(`/devices/${e}`)
         axios
             .get(`/devices/${e}`)
-            .then(response => this.setState({
-                device: response.data
-            }))
+            .then(response => this.setState({ device: response.data }))
             .catch(console.error);
     }
 
@@ -63,10 +70,10 @@ class SearchDB extends React.Component {
             )
         })
 
-        const deviceResults = this.state.device.map((device, index) => {
+        const deviceResults = this.state.device.map((device) => {
             return (
                 <DeviceLookUp
-                    id={index}
+                    id={device.id}
                     mpn={device.mpn}
                     customer={device.customer}
                     package_type={device.package_type}
@@ -78,27 +85,16 @@ class SearchDB extends React.Component {
             )
         })
         return (
-            <div>
-                <div className="search-header">
-                    <div className="logo" onClick={this.goToHome}>
-                        SQM
-                    </div>
-                    <div className="searchBars-container">
-                        <div className="searchBar">
-                            <div className="input"><input name="searchTape" value={this.state.search} onChange={this.handleTape} placeholder="SEARCH TAPE" /></div>
-                        </div>
-                        <div className="searchBar">
-                            <div className="input-"><input name="searchDevice" value={this.state.search} onChange={this.handleDevice} placeholder="SEARCH DEVICE" /></div>
-                        </div>
-                        <img className="add-btn" src={AddButton} alt="Add Button" onClick={this.goToEntry} />
-                    </div>
+            <div className="search-page">
+                <div className="search-bar">
+                    <div className="search-input"><input name="searchTape" value={this.state.search} onChange={this.handleTape} placeholder="SEARCH TAPE" /></div>
+                    <div className="search-input"><input name="searchDevice" value={this.state.search} onChange={this.handleDevice} placeholder="SEARCH DEVICE MPN" /></div>
                 </div>
-                <div className="body">
-                    <div className="search-results">
+                {this.state.searchTape === '' && this.state.searchDevice === '' ? <div className="search-message-container"><div className="search-message">Search Tape or Device</div></div> :
+                    <div className="results-body">
                         {tapeResults}
                         {deviceResults}
-                    </div>
-                </div>
+                    </div>}
             </div>
 
         );

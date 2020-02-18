@@ -1,9 +1,7 @@
 import React from "react";
 import axios from "axios";
-import BackArrow from "./icons/left-arrow.svg";
-import "./css/Entry.css";
-import "./css/Form.css";
-import MenuIcon from "./icons/menu-btn.svg";
+import "../css/Entry.css";
+import "../css/Form.css";
 
 class EditDevice extends React.Component {
     state = {
@@ -26,7 +24,8 @@ class EditDevice extends React.Component {
         tr_unit_pricing: '',
         nre: '',
         email_subject: '',
-        notes: ''
+        notes: '',
+        id: ''
 
     };
 
@@ -58,7 +57,8 @@ class EditDevice extends React.Component {
                         tr_unit_pricing: response.data[0].tr_unit_pricing,
                         nre: response.data[0].nre,
                         email_subject: response.data[0].email_subject,
-                        notes: response.data[0].notes
+                        notes: response.data[0].notes,
+                        id: response.data[0].id
                     })
                 }
             })
@@ -96,102 +96,81 @@ class EditDevice extends React.Component {
             tr_unit_pricing: this.state.tr_unit_pricing ? this.state.tr_unit_pricing : null,
             nre: this.state.nre ? this.state.nre : null,
             email_subject: this.state.email_subject ? this.state.email_subject : '',
-            notes: this.state.notes ? this.state.notes : ''
+            notes: this.state.notes ? this.state.notes : '',
+            id: this.state.id
         }
 
         axios.put('/device_update', device)
-            .then(res => console.log(res.data))
+            .then(res => console.log(res.data), console.log(this.state.id))
             .then(axios.get(`/devices/${this.props.match.params.mpn}`))
+            .then(this.props.history.push(`/view/device/${this.props.match.params.mpn}`))
     }
 
     render() {
         return (
             <div className="entry">
-                <div className="entry-header">
-                    <img className="back-arrow" src={BackArrow} alt="Back Arrow" onClick={this.goToSearch} />
-                    <div className="entry-page-title">
-                        Edit Device
-                    </div>
-                    <div className="entry-menu">
-                        <div className="entry-menu-btn-container">
-                            <img className="entry-menu-icon" src={MenuIcon} alt="Menu Icon" onClick={this.toggle} />
+                <div className="entry-container">
+                    <div className="entry-body">
+                        <div className="entry-line input-large">
+                                <input className="input-field" value={this.state.mpn} name="mpn" placeholder="MPN" type="text" onChange={this.handleInput} />
                         </div>
-                        {this.state.menu ?
-                            <div className="entry-menu-items">
-                                <button className="entry-menu-item" onClick={this.goToSearch}>Search</button>
-                                <button className="entry-menu-item" onClick={this.goToHome}>Home</button>
-                            </div> : null
-                        }
+                        <div className="entry-line input-large">
+                                <input className="input-field" value={this.state.package_type} name="package_type" placeholder="Package Type" type="text" onChange={this.handleInput} />
+                        </div>
+                        <div className="entry-line">
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.device_ao} name="device_ao" placeholder="A0" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.device_bo} name="device_bo" placeholder="B0" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.device_ko} name="device_ko" placeholder="K0" type="text" onChange={this.handleInput} />
+                            </div>
+                        </div>
+                        <div className="entry-line">
+                            <div className="input-container">
+                                <input className="input-field input-medium" value={this.state.customer} name="customer" placeholder="Customer" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-medium" value={this.state.contact} name="contact" placeholder="Contact" type="text" onChange={this.handleInput} />
+                            </div>
+                        </div>
+                        <div className="entry-line input-large">
+                                <input className="input-field" value={this.state.date_quoted} name="date_quoted" placeholder="Date Quoted" type="text" onChange={this.handleInput} />
+                        </div>
+                        <div className="entry-line">
+                            <div className="input-container">
+                                <input className="input-field input-medium" value={this.state.quote_eau} name="quote_eau" placeholder="Quote EAU" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-medium" value={this.state.quote_number} name="quote_number" placeholder="Quote Number" type="text" onChange={this.handleInput} />
+                            </div>
+                        </div>
+                        <div className="entry-line">
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.min_price} name="min_price" placeholder="Min Price" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.tr_unit_pricing} name="tr_unit_pricing" placeholder="Unit Price" type="text" onChange={this.handleInput} />
+                            </div>
+                            <div className="input-container">
+                                <input className="input-field input-small" value={this.state.nre} name="nre" placeholder="NRE" type="text" onChange={this.handleInput} />
+                            </div>
+                        </div>
+                        <div className="entry-line input-large">
+                                <input className="input-field" value={this.state.email_subject} name="email_subject" placeholder="Email Subject" type="text" onChange={this.handleInput} />
+                        </div>
+                        <div className="entry-line">
+                            <div className="input-container">
+                                <textarea className="input-field text-area" value={this.state.notes} name="notes" placeholder="Notes" type="text" onChange={this.handleInput} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            <div className="entry-body">
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.mpn} name="mpn" placeholder="MPN" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.package_type} name="package_type" placeholder="Package Type" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.device_ao} name="device_ao" placeholder="A0" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.device_bo} name="device_bo" placeholder="B0" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.device_ko} name="device_ko" placeholder="K0" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-medium" value={this.state.customer} name="customer" placeholder="Customer" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-medium" value={this.state.contact} name="contact" placeholder="Contact" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.date_quoted} name="date_quoted" placeholder="Date Quoted" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-medium" value={this.state.quote_eau} name="quote_eau" placeholder="Quote EAU" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-medium" value={this.state.quote_number} name="quote_number" placeholder="Quote Number" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.min_price} name="min_price" placeholder="Min Price" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.tr_unit_pricing} name="tr_unit_pricing" placeholder="Unit Price" type="text" onChange={this.handleInput} />
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field input-small" value={this.state.nre} name="nre" placeholder="NRE" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <input className="input-field input-large" value={this.state.email_subject} name="email_subject" placeholder="Email Subject" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="entry-line">
-                    <div className="input-container">
-                        <textarea className="input-field text-area" value={this.state.notes} name="notes" placeholder="Notes" type="text" onChange={this.handleInput} />
-                    </div>
-                </div>
-                <div className="submit-container">
+                <div className="submit-edit-container">
                     <button className="submit" onClick={this.handleSave}>Save</button>
                 </div>
-            </div>
             </div>
         );
     }

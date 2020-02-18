@@ -1,0 +1,70 @@
+.input-field {
+  width: 100%;
+  border-radius: 0px;
+  background: none;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.input-large {
+  width: 90%;
+}
+
+.input-medium {
+  width: 400px;
+}
+
+.input-third {
+  width: 500px;
+}
+
+.input-small {
+  width: 250px;
+}
+
+.input-xs {
+  width: 75px;
+}
+
+.text-area {
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  font-size: 19px;
+  border-radius: 5px;
+  background: #f9fcff;
+  resize: none;
+  border: none;
+}
+
+.input-field::placeholder {
+  font-size: 15px;
+  color: #606060;
+}
+
+.text-area::placeholder {
+  font-size: 15px;
+}
+
+.submit-container {
+  margin-top: 25px;
+}
+
+.submit-edit-container {
+  margin-bottom: 25px;
+}
+
+.submit {
+  width: 75px;
+  align-self: center;
+  color: #343434;
+  font-weight: bold;
+  background: #fbf9ff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit:hover {
+  background: #79ff4c;
+  cursor: pointer;
+}
